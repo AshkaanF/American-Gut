@@ -29,10 +29,10 @@ def interface():
 if __name__ == '__main__':
     args = interface()
 
-    header, mapping_file = parse_mapping_file(open(args.mapping_file))
+    mapping = parse_mapping_file(open(args.mapping_file))
 
-    n_participants = len(unique_participants(mapping_file))
-    n_samples = len(unique_samples(mapping_file))
+    n_participants = len(unique_participants(mapping))
+    n_samples = len(unique_samples(mapping))
 
     if args.sequences:
         seqs_files = [open(f) for f in args.sequences.split(',')]
