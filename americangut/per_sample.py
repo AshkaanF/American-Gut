@@ -320,7 +320,7 @@ def gradient_pcoa(opts, sample_ids):
         A dict containing each sample ID and any errors observed or None if
         no error was observed for the sample.
     """
-    coords = opts['ag-100nt-fecal-1k-unifrac-pc' % opts['sample_type']]
+    coords = opts['ag-100nt-%s-1k-unifrac-pc' % opts['sample_type']]
     cmd_fmt = ' '.join(["mod2_pcoa.py gradient",
                         "--coords %s" % coords,
                         "--mapping_file %s" % opts['ag-L2-taxa-md'],

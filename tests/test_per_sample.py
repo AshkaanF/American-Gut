@@ -73,24 +73,88 @@ class PerSampleTests(TestCase):
         obs = agps._iter_ids_over_system_call(cmd_fmt, ids, opts)
         self.assertEqual(obs, exp)
 
-    def test_taxa_summaries(self):
-        pass
+    # When the unit test suite is run, we cannot assume that the expected
+    # inputs to these methods are available. The intent of these next
+    # tests are to verify that the expected commands for system calls are
+    # being formed as expected indirectly via forcing failures.
     def test_taxon_significance(self):
-        pass
+        exp = {'test': ('FAILED (generate_otu_signifigance_tables_AGP.py: '
+                        'error: The supplied taxonomy file does not exist '
+                        'in the path.): '
+                        'generate_otu_signifigance_tables_AGP.py '
+                        '-i bar.biom -o foo/test -s test')}
+        ids = ['test']
+        opts = {'per-sample-results': 'foo',
+                'ag-L6-taxa-bar-biom': 'bar.biom',
+                'sample_type': 'bar'}
+
+        obs = agps.taxon_significance(opts, ids)
+        self.assertEqual(obs, exp)
+
     def test_body_site_pcoa(self):
-        pass
+        exp = {'test': ('FAILED (Error: Invalid value for "--coords": Path '
+                        '"foo" does not exist.): mod2_pcoa.py body_site '
+                        '--coords foo --mapping_file bar --output baz/test '
+                        '--prefix Figure_1 --samples test')}
+        ids = ['test']
+        opts = {'per-sample-results': 'baz',
+                'ag-pgp-hmp-gg-100nt-1k-unifrac-pc': 'foo',
+                'ag-cleaned-md': 'bar'}
+
+        obs = agps.body_site_pcoa(opts, ids)
+        self.assertEqual(obs, exp)
+
     def test_countly_pcoa(self):
-        pass
+        exp = {'test': ('FAILED (Error: Invalid value for "--distmat": Path '
+                        '"foo" does not exist.): mod2_pcoa.py country '
+                        '--distmat foo --coords bar --mapping_file baz '
+                        '--output foobar/test --prefix Figure_2 '
+                        '--samples test')}
+        ids = ['test']
+        opts = {'per-sample-results': 'foobar',
+                'ag-gg-100nt-1k-subsampled-unifrac-pc': 'bar',
+                'ag-gg-100nt-1k-bdiv-unifrac': 'foo',
+                'ag-gg-cleaned-md': 'baz'}
+
+        obs = agps.country_pcoa(opts, ids)
+        self.assertEqual(obs, exp)
+
     def test_gradient_pcoa(self):
-        pass
+        exp = {'test': ('FAILED (Error: Invalid value for "--coords": Path '
+                        '"foo" does not exist.): mod2_pcoa.py gradient '
+                        '--coords foo --mapping_file bar --output baz/test '
+                        '--prefix Figure_3 --color foobar '
+                        '--samples test')}
+        ids = ['test']
+        opts = {'per-sample-results': 'baz',
+                'ag-100nt-what-1k-unifrac-pc': 'foo',
+                'ag-L2-taxa-md': 'bar',
+                'sample_type': 'what',
+                'gradient-color-by': 'foobar'}
+
+        obs = agps.gradient_pcoa(opts, ids)
+        self.assertEqual(obs, exp)
+
     def test_pie_plot(self):
-        pass
+        exp = {'test': ('FAILED (make_pie_plot_AGP.py: error: The supplied '
+                        'taxonomy file does not exist in the path.): '
+                        'make_pie_plot_AGP.py -i foo -o bar/test -s test')}
+        ids = ['test']
+        opts = {'per-sample-results': 'bar',
+                'ag-L3-taxa-tsv': 'foo'}
+
+        obs = agps.pie_plot(opts, ids)
+        self.assertEqual(obs, exp)
+
     def test_bar_chart(self):
-        pass
+        self.fail()
+
+    def test_taxa_summaries(self):
+        self.fail()
     def test_per_sample_directory(self):
-        pass
+        self.fail()
     def test_stage_per_sample_specific_statics(self):
-        pass
+        self.fail()
 
 if __name__ == '__main__':
     main()
