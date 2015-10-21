@@ -33,7 +33,6 @@ We're going to now setup a parameters file for the OTU picking runs. It is possi
 ...
 >>> with open(_params_file, 'w') as f:
 ...     f.write("pick_otus:otu_picking_method sortmerna\n")
-...     f.write("pick_otus:similarity 0.97\n")
 ...     f.write("pick_otus:threads %d\n" % multiprocessing.cpu_count())
 ...
 ...     if agenv.get_sortmerna_index():
@@ -67,6 +66,9 @@ And now we can actually pick the OTUs. This will take sometime. Note, we're issu
 And we'll end with some sanity checking of the outputs.
 
 ```python
->>> assert os.stat(ag_biom).st_size > 0
->>> assert os.stat(ag_100nt_biom).st_size > 0
+>>> !biom summarize-table -i $ag_biom | head -n 25
+```
+
+```python
+>>> !biom summarize-table -i $ag_100nt_biom | head -n 25
 ```
